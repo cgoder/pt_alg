@@ -1,4 +1,4 @@
-# 训练计划算法-负荷计量
+# 训练计划算法-模块-负荷计量框架
 
 > 基于`FITTVP`运动处方原则，以`VIDF`为核心的可计算的负荷建模框架
 
@@ -249,7 +249,7 @@ WeeklyLoad < MRV
 
 # 十一、最终结构
 
-```
+```mermaid
 ActionLoad → SessionLoad → WeeklyLoad → PeriodLoad
 ```
 
