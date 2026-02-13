@@ -49,23 +49,32 @@
 
 ------
 
-# 三、第一步：定义单动作负荷
+# 三、第一步：定义单动作负荷 (Dual-Track Load)
 
-## 抗阻力类动作（器械 / 自由重量）
-
-定义：
-
-```
-ActionLoad = 重量 × 次数 × 强度系数
-```
-
-其中：
+## 1. 代谢负荷 (Metabolic Load - Volume)
+侧重：肌肉生长、耐力、消耗。
 
 ```
-强度系数 = 实际重量 / 估算1RM
+MetabolicLoad = Weight × Reps
 ```
 
-若无1RM，用RPE近似映射。
+## 2. 神经负荷 (Neural Load - CNS Fatigue)
+侧重：最大力量、爆发力、神经疲劳。
+
+```
+NeuralLoad = Weight × Reps × IntensityFactor²
+```
+其中 `IntensityFactor²` (或 $e^{Intensity}$) 使得大重量的权重呈指数级上升。
+例如：
+- 100kg × 1 reps @ 100% 1RM:
+  - Metabolic = 100
+  - Neural = 100 × 1² = 100
+- 50kg × 20 reps @ 50% 1RM:
+  - Metabolic = 1000
+  - Neural = 1000 × 0.25 = 250
+
+**结论**：高次数训练产生巨大代谢压力，但神经压力相对较小；极限重量反之。系统需分别监控两者。
+
 
 ------
 
@@ -112,57 +121,44 @@ V = Σ(有效重复次数)
 
 ------
 
-# 五、定义强度 I
+# 五、定义强度 I 与 RIR
 
-强度必须统一到 0~1 区间。
+强度必须统一到 0~1 区间，并结合 RIR (Reps In Reserve)。
 
-推荐两种计算方式：
-
-### 有重量：
-
+### 1. 绝对强度 (Absolute Intensity)
 ```
-I = 实际负荷 / 估算1RM
+I_abs = 实际负荷 / 估算1RM
 ```
 
-### 无重量：
+### 2. 相对强度 (Relative Intensity / Effort)
+引入 RIR 修正：
+```
+Effort = 1 / (RIR + 1)
+```
+- RIR 0 (力竭) → Effort 1.0
+- RIR 4 (保留4次) → Effort 0.2
 
-用 RPE 映射：
-
-| RPE  | I    |
-| ---- | ---- |
-| 6    | 0.6  |
-| 7    | 0.7  |
-| 8    | 0.8  |
-| 9    | 0.9  |
+**实际强度系数** = `I_abs` × `Effort`
 
 ------
 
-# 六、定义密度 D
-
+# 六、定义密度 D 与 强度约束
 
 定义：训练密度 = 单位时间内完成的有效训练量。
-
 
 ```
 D = 总有效训练量 / 总训练时间
 ```
 
-单位：
+单位：`有效重复 / 分钟`
+
+### 密度-强度约束 (D-I Constraint)
+**高密度必须牺牲强度。** 禁止同时要求高密度与高强度。
 
 ```
-有效重复 / 分钟
+MaxAllowedIntensity = 1 / (1 + k × D)
 ```
-
-密度反映：
-
-- 代谢压力
-- 心肺刺激
-- 恢复需求
-
-
-例如：
-- 30分钟做20组
-- 30分钟做10组
+若密度极高（如 HIIT），则强制限制最大强度（如 < 60% 1RM），防止安全事故。
 
 ------
 
@@ -171,22 +167,14 @@ D = 总有效训练量 / 总训练时间
 现在可以定义：
 
 ```
-SessionLoad = V × I × 密度修正系数
-```
-
-更完整版本：
-
-```
-SessionLoad = (Σ ActionLoad) × D_adjust
+Session_MetabolicLoad = Σ(MetabolicLoad_i) × D_adjust
+Session_NeuralLoad = Σ(NeuralLoad_i)
 ```
 
 其中：
-
 ```
-D_adjust = 1 + (D / 基准密度)
+D_adjust = 1 + log(D)  // 密度对代谢压力的放大是对数的
 ```
-
-这使得高密度课负荷自动增加。
 
 ------
 

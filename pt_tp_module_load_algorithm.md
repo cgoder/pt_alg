@@ -16,9 +16,12 @@
 
 ## 3. 基本公式
 
-SessionLoadTarget = Σ(ActionLoad_i)
+## 3. 基本公式 (Dual-Track)
 
-ActionLoad = V × I × D_adjust
+```
+Target_Metabolic = Σ(Weight × Reps × D_adjust)
+Target_Neural    = Σ(Weight × Reps × IntensityFactor²)
+```
 
 ---
 
@@ -26,49 +29,54 @@ ActionLoad = V × I × D_adjust
 
 ### Step 1：按刺激权重分配
 
-例如增肌模型：
-
-- 主复合动作：40%
-- 次复合动作：30%
-- 辅助动作：20%
-- 核心/代谢：10%
+例如增肌模型（侧重 Metabolic）：
+- 主复合动作：40% Load
+  - 需同时监控 Neural Load 消耗，防止过早力竭。
 
 ---
 
 ### Step 2：按运动模式分配
 
 确保：
-- 推
-- 拉
-- 蹲
-- 髋
-- 核心
-
-均衡覆盖（若无特别目标）
+- 推 / 拉 / 蹲 / 髋 / 核心
+- 均衡覆盖（若无特别目标）
 
 ---
 
-### Step 3：转化为组数/次数
+### Step 3：转化为 组数 / 次数 / RIR
 
-根据目标强度区间：
+**必需引入 RIR (Reps In Reserve) 标尺：**
 
-- 增肌：8-12次
-- 力量：3-6次
-- 减脂：15-20次或时间制
+- **增肌 (Hypertrophy)**:
+  - Reps: 8-12
+  - RIR: 1-2 (接近力竭)
+  - Effort Coefficient: 0.9
 
-通过反推：
+- **力量 (Strength)**:
+  - Reps: 3-5
+  - RIR: 2-3 (保证技术动作)
+  - Effort Coefficient: 0.8
 
-组数 = 预算负荷 ÷ 单组预估负荷
+- **代谢/耐力 (Endurance)**:
+  - Reps: 15+
+  - RIR: 0-1 (完全力竭)
+  - Effort Coefficient: 1.0
+
+**计算公式：**
+```
+Sets = TargetLoad / (AvgWeight × Reps × Effort)
+```
 
 ---
 
-### Step 4：密度校正
+### Step 4：密度与强度校正
 
-若目标为高密度模型：
+**关键约束：高密度 = 低强度上限**
 
-减少休息时间
-或
-采用循环结构
+若 `Density > Threshold` (如组间歇 < 60s):
+- 强制 `MaxIntensity < 75% 1RM`
+- 若原计划强度过高，自动降重加次。
+
 
 ---
 
